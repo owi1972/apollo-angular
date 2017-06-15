@@ -25,6 +25,7 @@ export interface UsersQuery {
   users: Array< {
     firstName: string | null,
     lastName: string | null,
+    email: string | null,
     emails: Array< {
       address: string | null,
       verified: boolean | null,
