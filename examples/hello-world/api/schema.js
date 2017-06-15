@@ -1,5 +1,24 @@
 import casual from 'casual';
 
+
+
+/*
+http://localhost:4300/graphiql
+type Query {
+  users(name: String): [User]
+}
+>>
+{
+  users {
+    lastName
+  	email
+    emails  {
+    	address
+    }
+  }
+}
+*/
+
 export const schema = [`
 type Email {
   address: String
@@ -9,6 +28,7 @@ type User {
   emails: [Email]
   firstName: String
   lastName: String
+  email: String
 }
 type Query {
   users(name: String): [User]
@@ -29,6 +49,7 @@ casual.define('user', () => {
 	return {
 		firstName: casual.first_name,
 		lastName: casual.last_name,
+    email: casual.email,
     emails: [{
       address: casual.email,
       verified: true,
@@ -40,7 +61,7 @@ export const resolvers = {
   Query: {
     users(root, args) {
       const data = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 20; i++) {
         data.push(casual.user);
       }
       return data;
@@ -50,11 +71,12 @@ export const resolvers = {
     emails: () => casual.user.emails,
     firstName: ({firstName}) => firstName || casual.user.firstName,
     lastName: ({lastName}) => lastName || casual.user.lastName,
+    email: ({email}) => email || casual.user.email,
   },
   Mutation: {
     addUser: (_, { firstName, lastName }) => {
       const user = casual.user;
-      
+
       user.firstName = firstName;
       user.lastName = lastName;
 

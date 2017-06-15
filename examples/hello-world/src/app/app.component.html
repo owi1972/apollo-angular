@@ -11,6 +11,6 @@
 
 <ul>
   <li *ngFor="let user of users | async">
-    {{user.firstName}} {{user.lastName}}
+    {{user.firstName}} {{user.lastName}} - {{user.email}}
   </li>
 </ul>

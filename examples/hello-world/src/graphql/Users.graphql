@@ -2,6 +2,7 @@ query Users($name: String) {
   users(name: $name) {
     firstName
     lastName
+    email
     emails {
       address
       verified
