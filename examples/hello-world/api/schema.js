@@ -7,7 +7,7 @@ http://localhost:4300/graphiql
 type Query {
   users(name: String): [User]
 }
->>
+>>>>>>>>>>>>>>>>>>>>>>>>
 {
   users {
     lastName
@@ -15,6 +15,18 @@ type Query {
     emails  {
     	address
     }
+  }
+}
+>>>>>>>>>>>>>>>>>>>>>>
+{
+  blogs{
+    route
+    date
+		desc
+    title
+    abstract
+    blog
+    tags
   }
 }
 */
@@ -30,8 +42,28 @@ type User {
   lastName: String
   email: String
 }
+type Blog {
+  route: String
+  date: String
+  desc: String
+  title: String
+  abstract: String
+  blog: String
+  tags: [String]
+  comments: [Comment]
+}
+type Comment {
+  route: String
+  date: String
+  nickname: String
+  email: String
+  comment: String
+  photo: String
+}
 type Query {
   users(name: String): [User]
+  cats(name: String): [User]
+  blogs(route: String): [Blog]
 }
 type Mutation {
   addUser(
@@ -57,12 +89,57 @@ casual.define('user', () => {
 	};
 });
 
+casual.define('blog', () => {
+  const blog_route = casual.uuid;
+	return {
+      route: blog_route,
+      date: casual.date('YYYY-MM-DD'),
+      desc: casual.description,
+      title: casual.catch_phrase,
+      abstract: casual.address1,
+      blog: casual.company_name,
+      tags: [ casual.card_type ],
+      comments: [
+        {
+        route: blog_route,
+        date: casual.date('YYYY-MM-DD'),
+        nickname: casual.color_name,
+        email: casual.email,
+        comment: casual._address,
+        photo: casual._city
+      },
+      {
+        route: blog_route,
+        date: casual.date('YYYY-MM-DD'),
+        nickname: casual.color_name,
+        email: casual.email,
+        comment: casual._address,
+        photo: casual._city
+      }
+      ]
+	};
+});
+
 export const resolvers = {
   Query: {
     users(root, args) {
       const data = [];
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 5; i++) {
         data.push(casual.user);
+      }
+      return data;
+    },
+    cats(root, args) {
+      const data = [];
+      for (let i = 0; i < 5; i++) {
+        data.push(casual.user);
+      }
+      return data;
+    },
+    blogs(root, args) {
+      const data = [];
+      for (let i = 0; i < 5; i++) {
+        data.push(casual.blog);
       }
       return data;
     },
@@ -72,6 +149,11 @@ export const resolvers = {
     firstName: ({firstName}) => firstName || casual.user.firstName,
     lastName: ({lastName}) => lastName || casual.user.lastName,
     email: ({email}) => email || casual.user.email,
+  },
+  Blog: {
+    route: ({route}) => route || casual.blog.route,
+    date: ({date}) => date || casual.blog.date,
+    desc: ({desc}) => desc || casual.blog.desc,
   },
   Mutation: {
     addUser: (_, { firstName, lastName }) => {

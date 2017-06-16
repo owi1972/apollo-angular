@@ -1,0 +1,19 @@
+query Blogs($route: String) {
+  blogs(route: $route) {
+    route
+    date
+    desc
+    title
+    abstract
+    blog
+    tags
+    comments {
+      route
+      date
+      nickname
+      email
+      comment
+      photo
+    }
+  }
+}
