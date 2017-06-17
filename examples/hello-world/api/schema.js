@@ -91,6 +91,7 @@ casual.define('user', () => {
 
 casual.define('blog', () => {
   const blog_route = casual.uuid;
+  // const blog_route = '7beb460b-b04d-4748-8c8f-2886e5fd29b0';
 	return {
       route: blog_route,
       date: casual.date('YYYY-MM-DD'),

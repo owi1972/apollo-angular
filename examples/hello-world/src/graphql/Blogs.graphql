@@ -5,15 +5,6 @@ query Blogs($route: String) {
     desc
     title
     abstract
-    blog
     tags
-    comments {
-      route
-      date
-      nickname
-      email
-      comment
-      photo
-    }
   }
 }
