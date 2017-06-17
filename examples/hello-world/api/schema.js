@@ -105,16 +105,16 @@ casual.define('blog', () => {
         date: casual.date('YYYY-MM-DD'),
         nickname: casual.color_name,
         email: casual.email,
-        comment: casual._address,
-        photo: casual._city
+        comment: casual.address,
+        photo: casual.city,
       },
       {
         route: blog_route,
         date: casual.date('YYYY-MM-DD'),
         nickname: casual.color_name,
         email: casual.email,
-        comment: casual._address,
-        photo: casual._city
+        comment: casual.address,
+        photo: casual.city,
       }
       ]
 	};
